@@ -11,7 +11,7 @@ patch(['boto3'])
 
 s3_client = boto3.client('s3')
 bucket_name = os.environ['Bucket']
-file_name = os.environ['Bucket']
+file_name = os.environ['File']
 
 def lambda_handler(event, context):
     logger.info('os environment vars:')  
