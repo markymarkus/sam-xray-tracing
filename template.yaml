@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  sam-app
+  Sample SAM Template for sam-app
+Parameters:
+  BucketNameParam:
+    Type: String
+    Default: test-bucketto
+  BucketPrefixParam:
+    Type: String
+    Default: test.txt
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  TraceFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: src/
+      Handler: app.lambda_handler
+      Runtime: python3.6
+      Tracing: Active
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Sub "${BucketNameParam}"
+      Environment:
+        Variables:
+          Bucket: !Sub "${BucketNameParam}"
+          File: !Sub "${BucketPrefixParam}"
